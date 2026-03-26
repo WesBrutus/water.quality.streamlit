@@ -1,371 +1,112 @@
-AGILE Documentation: Biscayne Bay Water Quality Dashboard
-Project Overview
-This document outlines the AGILE development process for the Biscayne Bay Water Quality Dashboard, an interactive web application designed to visualize and analyze environmental water quality data.
-
-1. Project Vision
-To provide an interactive, data-driven platform for monitoring environmental health metrics in Biscayne Bay, specifically focusing on water quality parameters including pH, salinity, temperature, dissolved oxygen, chlorophyll, and turbidity. The application enables researchers and policy advocates to identify trends, analyze spatial distributions, and make data-informed decisions regarding marine ecosystem health.
-
-2. User Personas
-Persona A: Environmental Researcher (Dr. Silva)
-Background:
-Marine biologist with 15 years of experience studying estuarine ecosystems.
-Goals:
-
-Identify long-term trends and anomalies in water quality data
-Analyze correlations between multiple environmental parameters
-Access granular, time-series data for statistical analysis
-
-Needs:
-
-High-resolution data filtering capabilities
-Interactive visualizations for exploratory data analysis
-Raw data export functionality (CSV format)
-Statistical summaries and descriptive analytics
-
-Pain Points:
-
-Manually cleaning large datasets like biscayneBay_waterquality.csv
-Time-consuming data preprocessing workflows
-Difficulty visualizing spatial-temporal patterns without custom scripts
-
-User Stories:
-
-"As a researcher, I want to filter data by date range so that I can focus on specific monitoring periods."
-"As a researcher, I want to view statistical summaries so that I can quickly assess data quality and distribution."
-"As a researcher, I want to export filtered data so that I can perform advanced statistical analysis in other tools."
-
-
-Persona B: Policy Advocate (Alex)
-Background:
-Environmental policy specialist working with local government agencies.
-Goals:
-
-Quickly assess whether current water quality levels meet regulatory standards
-Communicate findings to non-technical stakeholders
-Identify areas requiring immediate intervention
-
-Needs:
-
-Simplified, intuitive dashboards
-Geographic visualizations showing spatial distribution
-Clear visual indicators of parameter values relative to safety thresholds
-Minimal technical jargon in interface
-
-Pain Points:
-
-Overly complex technical terminology in existing tools
-Difficulty explaining data patterns to decision-makers
-Limited access to real-time or recent monitoring data
-
-User Stories:
-
-"As a policy advocate, I want to see water quality data on a map so that I can identify problem areas geographically."
-"As a policy advocate, I want clear parameter labels with units so that I can understand measurements without technical training."
-"As a policy advocate, I want to select specific metrics so that I can focus on regulatory priorities."
-
-
-3. Product Backlog
-High Priority Features
-IDTaskDescriptionAcceptance CriteriaStatusST-01Data IngestionClean and load biscayneBay_waterquality.csv into the application- CSV loads without errors- Column names standardized- DateTime properly parsed- Missing values handledCOMPLETEDST-02Filter ControlsImplement sidebar filters for data exploration- Metric selection dropdown functional- Data sample slider operational- Filters update all visualizationsCOMPLETEDST-03Geospatial MapVisualize sample locations using Latitude/Longitude coordinates- Map displays all data points- Color-coded by selected metric- Hover tooltips show details- Zoom and pan controls functionalCOMPLETED
-Medium Priority Features
-IDTaskDescriptionAcceptance CriteriaStatusST-04Temporal AnalysisCreate time-series visualization of parameter changes- Line chart shows trends over time- X-axis labeled with timestamps- Y-axis shows parameter values- Interactive tooltips enabledCOMPLETEDST-05Statistical SummaryDisplay descriptive statistics for selected parameters- Mean, std dev, min, max calculated- Quartile values displayed- Updates based on user selectionCOMPLETEDST-06Raw Data AccessProvide expandable view of complete dataset- Full dataframe accessible- All columns visible- Expandable interface to save spaceCOMPLETED
-Low Priority Features
-IDTaskDescriptionAcceptance CriteriaStatusST-07Data ExportAdd functionality to download filtered data as CSV- Export button visible- CSV contains filtered data- Filename includes timestampPENDINGST-08Parameter CorrelationCreate correlation matrix for multiple parameters- Heatmap shows correlations- Values between -1 and 1- Statistically significant values highlightedPENDINGST-09Threshold AlertsVisual indicators when parameters exceed safe ranges- Color-coded warnings- Configurable thresholds- Clear legend explaining levelsPENDING
-
-4. Sprint Planning
-Sprint 1: Data Foundation (Week 1)
-Objective: Establish data loading and preprocessing infrastructure.
-Tasks Completed:
-
-Implemented load_data() function with @st.cache_data decorator
-Added column name cleaning using .str.strip()
-Created DateTime parsing from separate date and time columns
-Established error handling for missing files
-
-Deliverables:
-
-Functional data loading mechanism
-Clean, standardized column names
-Proper DateTime indexing for temporal analysis
-
-Retrospective:
-
-What went well: Caching significantly improved performance; column cleaning handled edge cases effectively
-What to improve: Need better error messages for malformed data
-Action items: Add data validation checks in next sprint
-
-
-Sprint 2: Core Visualizations (Week 2)
-Objective: Implement primary data visualizations.
-Tasks Completed:
-
-Created interactive map using px.scatter_map()
-Developed time-series line chart
-Implemented responsive two-column layout
-Added hover tooltips with contextual information
-
-Deliverables:
-
-Geographic visualization of sampling locations
-Temporal trend analysis capability
-Professional layout with proper spacing
-
-Retrospective:
-
-What went well: Plotly provides excellent interactivity out-of-the-box; users can explore data intuitively
-What to improve: Need user controls to customize views
-Action items: Implement parameter selection and data sampling controls
-
-
-Sprint 3: User Controls & Polish (Week 3)
-Objective: Add interactive controls and finalize user experience.
-Tasks Completed:
-
-Added metric selection dropdown in sidebar
-Implemented data sample size slider
-Created statistical summary table
-Provided expandable raw data view
-Updated deprecated API calls (scatter_mapbox → scatter_map)
-
-Deliverables:
-
-Fully interactive dashboard with user controls
-Statistical insights automatically calculated
-Access to underlying raw data
-
-Retrospective:
-
-What went well: User controls dramatically improve flexibility; sample slider addresses performance concerns
-What to improve: Could add export functionality for filtered data
-Action items: Consider adding CSV download feature in future iteration
-
-
-5. Definition of Done (DoD)
-A feature is considered complete when ALL of the following criteria are met:
-Code Quality
-
- Code adheres to PEP 8 style guidelines
- Functions include docstrings explaining purpose and parameters
- Variable names are descriptive and follow naming conventions
- No unused imports or commented-out code
-
-Functionality
-
- Feature works without errors or warnings
- Edge cases are handled appropriately
- Performance is acceptable with full dataset
- User inputs are validated
-
-User Experience
-
- Feature is intuitive and requires minimal explanation
- Visual elements include proper labels and titles
- Units of measurement are clearly displayed (mg/L, ppt, °C, NTU)
- Error messages are helpful and actionable
-
-Testing
-
- Application tested locally on localhost:8501
- Feature tested with various user inputs
- Feature tested with edge cases (empty data, single point, etc.)
- Cross-browser compatibility verified (Chrome, Firefox, Safari)
-
-Security & Best Practices
-
- No hardcoded file paths or sensitive information
- No API keys or credentials in source code
- Data validation prevents injection attacks
- User inputs are sanitized
-
-Documentation
-
- Code comments explain complex logic
- User-facing text is clear and free of jargon
- README updated with new features
- AGILE documentation reflects completion
-
-
-6. Technical Stack
-Core Technologies
-ComponentTechnologyVersionPurposeProgramming LanguagePython3.8+Primary development languageWeb FrameworkStreamlit1.31.0Interactive web application frameworkData ProcessingPandas2.2.0Data manipulation and analysisNumerical ComputingNumPy1.26.3Array operations and mathematical functionsVisualizationPlotly Express5.18.0Interactive charts and maps
-Development Tools
-
-Version Control: Git
-Package Management: pip
-Virtual Environment: venv
-Code Editor: VS Code / PyCharm
-Testing: Manual testing with various datasets
-
-Architecture
-Application Architecture
-├── Data Layer
-│   └── CSV file loading and caching
-├── Processing Layer
-│   ├── Data cleaning and transformation
-│   └── Statistical calculations
-├── Presentation Layer
-│   ├── Streamlit web interface
-│   ├── Plotly visualizations
-│   └── Interactive controls
-└── User Interaction Layer
-    ├── Sidebar widgets (dropdowns, sliders)
-    └── Expandable sections
-Data Flow
-CSV File → Pandas DataFrame → Column Cleaning → DateTime Parsing
-    ↓
-User Input (Sidebar Controls)
-    ↓
-Data Filtering (Sample Selection)
-    ↓
-Visualizations (Plotly Charts)
-    ↓
-Display (Streamlit Interface)
-
-7. Development Methodology
-AGILE Principles Applied
-1. Iterative Development
-
-Application built in three focused sprints
-Each sprint delivers working, testable features
-Regular integration of new components
-
-2. User-Centric Design
-
-Features prioritized based on user personas (Dr. Silva and Alex)
-Continuous consideration of user needs and pain points
-Simplified interface for non-technical users
-
-3. Working Software Over Documentation
-
-Functional application available at end of each sprint
-Documentation supports but does not replace working code
-Emphasis on delivering value early and often
-
-4. Responding to Change
-
-Flexible architecture allows feature additions
-User feedback incorporated between sprints
-Technical debt addressed proactively
-
-5. Continuous Improvement
-
-Sprint retrospectives identify lessons learned
-Best practices refined throughout development
-Code quality maintained through consistent standards
-
-
-8. Risk Management
-Identified Risks
-RiskLikelihoodImpactMitigation StrategyLarge dataset performance issuesMediumHighImplement caching and data sampling controlsCSV format inconsistenciesHighMediumRobust column name cleaning and error handlingBrowser compatibility issuesLowMediumTest on multiple browsers; use standard web technologiesUser confusion with technical termsMediumMediumProvide clear labels and explanatory text
-Technical Debt
-Current Items:
-
-Missing comprehensive error handling for malformed CSV data
-No unit tests for data processing functions
-Limited input validation on user controls
-
-Planned Resolution:
-
-Add try-catch blocks with informative error messages
-Implement pytest test suite in future sprint
-Validate user inputs before processing
-
-
-9. Success Metrics
-Functional Completeness
-
-All high-priority backlog items completed: 3/3 (100%)
-All medium-priority backlog items completed: 3/3 (100%)
-Application meets minimum viable product (MVP) requirements
-
-Code Quality
-
-PEP 8 compliance maintained throughout codebase
-Functions properly documented with docstrings
-No critical bugs or errors in production
-
-User Experience
-
-Dashboard loads in under 2 seconds with cached data
-All visualizations include proper labels and units
-Interface is intuitive for both technical and non-technical users
-
-AGILE Process
-
-Three sprints completed on schedule
-User stories drive all feature development
-Regular retrospectives conducted
-Definition of Done consistently applied
-
-
-10. Future Roadmap
-Planned Enhancements (Next Iteration)
-Phase 1: Data Export & Analysis
-
-CSV download functionality for filtered data
-PDF report generation with visualizations
-Correlation matrix between parameters
-
-Phase 2: Advanced Visualizations
-
-Depth profile analysis
-Multi-parameter comparison charts
-Time-lapse animation of water quality changes
-
-Phase 3: Scalability & Integration
-
-Support for multiple datasets
-API integration for real-time data
-User accounts for saving preferences
-
-
-11. Lessons Learned
-Technical Insights
-
-Streamlit's caching significantly improves performance with large datasets
-Column name inconsistencies require robust preprocessing
-User controls for data sampling essential for performance management
-
-Process Insights
-
-User personas effectively guide feature prioritization
-Sprint retrospectives identify improvement opportunities early
-Clear Definition of Done prevents scope creep
-
-Best Practices
-
-Start with data exploration before coding
-Test early and often with real data
-Document as you develop, not retroactively
-Prioritize user experience over technical complexity
-
-
-Project Status
-Current Phase: COMPLETE
-Methodology: AGILE with iterative sprints
-Development Duration: 3 weeks (3 sprints)
-Completion Rate: 100% of planned features delivered
-Code Quality: Production-ready with comprehensive documentation
-
-Appendix
-A. User Story Template
-As a [user type],
-I want to [perform action],
-So that [achieve goal].
-
-Acceptance Criteria:
-- [Criterion 1]
-- [Criterion 2]
-- [Criterion 3]
-B. Sprint Review Checklist
-
- Demo working features to stakeholders
- Gather feedback on user experience
- Update backlog based on insights
- Plan next sprint priorities
-
-C. Retrospective Questions
-
-What went well this sprint?
-What could be improved?
-What will we commit to improving next sprint?
+# Biscayne Bay Water Quality Dashboard — Technical Documentation
+
+## Project Overview
+Interactive Streamlit dashboard for visualizing AUV-collected water quality data from Biscayne Bay, Florida (February 4, 2022). Built across 4 AGILE sprints.
+
+---
+
+## Architecture
+
+### File Structure
+```
+water.quality.streamlit/
+├── main.py                        # Main Streamlit application
+├── biscayneBay_waterquality.csv   # AUV sensor dataset (942 rows)
+├── requirements.txt               # Python dependencies
+├── README.md                      # Project overview and usage guide
+└── Documentation                  # This file — technical reference
+```
+
+### Application Flow
+1. `load_data()` — reads CSV, strips column names, parses Timestamp, derives `Elapsed Min`
+2. Sidebar renders all user controls
+3. `filtered` DataFrame is built from depth range + sample size selections
+4. All charts reference `filtered` and `selected_metric`
+5. Layout renders in 4 rows: Map/TS → Depth/Corr → Scatter/Hist → Stats/Anomaly
+
+---
+
+## Key Design Patterns
+
+### METRICS Config Dict
+Centralizes all per-parameter metadata to avoid repetition:
+```python
+METRICS = {
+    'Temp C': {'label': 'Temperature', 'unit': '°C', 'color': '#ff6b35'},
+    ...
+}
+```
+
+### PLOTLY_TEMPLATE Dict
+Shared layout settings applied to every chart for visual consistency:
+```python
+PLOTLY_TEMPLATE = dict(
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='#071525',
+    font=dict(color='#7aabcc', ...),
+    ...
+)
+```
+
+---
+
+## Sprint History
+
+### Sprint 1 — Foundation
+- CSV loading with `@st.cache_data`
+- Column name normalization via `.str.strip()`
+- Timestamp construction from separate Date/Time columns
+
+### Sprint 2 — Visualizations
+- `px.scatter_mapbox` for spatial distribution
+- `px.line` for temporal trends
+- Two-column layout with `st.columns`
+
+### Sprint 3 — User Controls
+- `st.sidebar.selectbox` for metric selection
+- `st.sidebar.slider` for sample size
+- `st.table` for statistical summary
+- `st.expander` for raw data view
+
+### Sprint 4 — Advanced Analytics
+- Dark ocean CSS theme with Google Fonts
+- KPI metric cards (HTML/CSS grid via `st.markdown`)
+- Depth profile: `groupby('depth_bin').agg(['mean','std'])` + `go.Scatter` with `error_x`
+- Correlation matrix: `df.corr()` + `go.Heatmap` with `RdBu_r` colorscale
+- Rolling average: `.rolling(window=20, center=True).mean()`
+- Anomaly detection: `(x - mean).abs() > 2 * std`
+- Scatter + OLS: `px.scatter(trendline='ols')` (requires statsmodels)
+- Histogram: `go.Histogram` + `add_vline` for mean/median
+- CSV download: `st.download_button` with `df.to_csv().encode('utf-8')`
+
+---
+
+## Dependencies
+
+| Package | Version | Usage |
+|---|---|---|
+| streamlit | 1.31.0 | App framework, widgets, layout |
+| pandas | 2.2.0 | DataFrame operations, CSV loading |
+| plotly | 5.18.0 | All interactive charts and maps |
+| numpy | 1.26.0 | Correlation matrix rounding, array ops |
+| statsmodels | ≥0.14.0 | OLS trendline via Plotly trendline='ols' |
+
+---
+
+## Common Issues
+
+| Issue | Cause | Fix |
+|---|---|---|
+| `ScriptRunContext` warning | Running with `python` instead of `streamlit run` | Use `streamlit run main.py` |
+| Blank map | No internet / firewall blocking tile CDN | Check connection |
+| OLS trendline error | statsmodels not installed | `pip install statsmodels` |
+| `KeyError` on column | Extra whitespace in CSV headers | Already handled by `.str.strip()` |
+| Empty anomaly table | All data within ±2σ (normal distribution) | Expected — no anomalies present |
+
+---
+
+## Data Notes
+- AUV collected data continuously along transect lines across the bay
+- `Elapsed Min` is a derived column = seconds since mission start / 60
+- Depth is in feet as recorded by the AUV sensor suite
+- Timestamps combine the `Date m/d/y` and `Time hh:mm:ss` columns
